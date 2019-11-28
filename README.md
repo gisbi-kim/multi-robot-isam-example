@@ -29,11 +29,11 @@ convergence is not stable)
 
 ## Some example sheets from the docs
 
-<img src="./docs/figs/p0.png" title="FVCproductions" alt="FVCproductions"></a>
-<img src="./docs/figs/p1.png" title="FVCproductions" alt="FVCproductions"></a>
-<img src="./docs/figs/p2.png" title="FVCproductions" alt="FVCproductions"></a>
-<img src="./docs/figs/p3.png" title="FVCproductions" alt="FVCproductions"></a>
-<img src="./docs/figs/p4.png" title="FVCproductions" alt="FVCproductions"></a>
+<img src="./docs/figs/p0.png" title="gs" alt="gs"></a>
+<img src="./docs/figs/p1.png" title="gs" alt="gs"></a>
+<img src="./docs/figs/p2n.png" title="gs" alt="gs"></a>
+<img src="./docs/figs/p3.png" title="gs" alt="gs"></a>
+<img src="./docs/figs/p4n.png" title="gs" alt="gs"></a>
 
 ## contact 
 - paulgkim@kaist.ac.kr
