@@ -29,7 +29,7 @@ public:
   void batchOptimizationMultiSlam(void);
   void batchOptimization(void);
 
-  void saveGraph(std::string _savedir, std::string _name, bool _verbose_local = true, bool _verbose_global = false);
+  void saveGraph(std::string _savedir, std::string _name, bool _verbose_local = true, bool _verbose_global = false) const;
 
 public: // graph optimizer 
   std::shared_ptr<Slam> multi_slam_;

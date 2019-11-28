@@ -178,14 +178,14 @@ Robot2D::batchOptimizationMultiSlam(void)
 
 
 void 
-Robot2D::batchOptimization(void)
+Robot2D::batchOptimization(void) 
 {
     single_slam_.batch_optimization();
 } // Robot2D::batchOptimization
 
 
 void 
-Robot2D::saveGraph(std::string _savedir, std::string _name, bool _verbose_local, bool _verbose_global)
+Robot2D::saveGraph(std::string _savedir, std::string _name, bool _verbose_local, bool _verbose_global) const
 {
     std::string savedir{_savedir};
     std::string end_str{_savedir.back()};
