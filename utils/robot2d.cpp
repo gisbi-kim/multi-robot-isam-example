@@ -117,8 +117,8 @@ Robot2D::addOdometryFactor(Pose2d _pose2d_relative)
     int node_idx_new_inserted = node_idx_curr + 1;
 
     std::cout << "Odometry [Robot " << this_robot_index_ << "]: " 
-         << node_idx_curr << "(" << node_idxes_global_.at(node_idx_curr) << " in global) <-> " 
-         << node_idx_new_inserted << "(" << node_idxes_global_.back() << " in global)" << std::endl;
+         << node_idx_curr << " (" << node_idxes_global_.at(node_idx_curr) << " in global) <-> " 
+         << node_idx_new_inserted << " (" << node_idxes_global_.back() << " in global)" << std::endl;
 
     Pose2d odo(_pose2d_relative);
     auto odo_factor = std::make_shared<Pose2d_Pose2d_Factor>(
@@ -196,21 +196,21 @@ Robot2D::saveGraph(std::string _savedir, std::string _name, bool _verbose_local,
     single_slam_.save(save_name);
     if(_verbose_local)
     {
+        std::cout << "  anchor transform wrt the global: " << anchor_node_->value() << std::endl;
         for (int i=0; i<nodes_.size(); ++i)
         {
             // disp local coord
-            std::cout << "  x(" << i << "): " << nodes_.at(i).get()->value() << " "; // << std::endl;
+            std::cout << "  x(" << i << "): robot frame " << nodes_.at(i).get()->value() << " "; // << std::endl;
 
             // disp global coord (transformed using anchor node's relative)
-            if(_verbose_global)
-                std::cout << "/ x(" << i << ") wrt global coord: " << nodes_.at(i).get()->value().oplus(anchor_node_->value()) << std::endl;
+            if(_verbose_global)                
+                std::cout << "/ global frame " << anchor_node_->value().oplus(nodes_.at(i).get()->value()) << std::endl;
             else
                 std::cout << std::endl;
-
         }
     }
 
-    std::cout << " graph saved: " << save_name << std::endl;
+    std::cout << " graph saved as: " << save_name << std::endl;
 
     // save the overall multi-session graph also
     multi_slam_->save(savedir + "multisession_slam.graph");

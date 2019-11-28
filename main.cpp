@@ -51,7 +51,7 @@ auto main() -> int
   robot_1.addOdometryFactor(Pose2d(one_step, 0.0, 0.0));
 
   // The robot 2 moves 3 steps in x 
-  robot_2.addOdometryFactor(Pose2d(3.0*one_step, 0.0, 0.0));
+  robot_2.addOdometryFactor(Pose2d(2.0*one_step, 0.0, 0.0));
 
   // The robot 1 and 2 encountered (i.e., inter-loop detected)
   // - Assume the node 1 of the robot 1 and the node 0 of the robot 2 has a relative transformation (1,1,0)
@@ -64,8 +64,25 @@ auto main() -> int
   loop_relative = Pose2d(1., 1., 0.);
   robot_1.addInterLoopFactor(loop_node_target, robot_2, loop_node_matched, loop_relative);
 
-  // // While the robot 1 and 2 are going around, 
-  // // The other robot, a robot 3 is generated and starts to operate 
+  // optimization including the anchor node graph
+  cout << endl << "optimize the multi-session graph ..." << endl;
+  multislam->batch_optimization(); // == robot_1.batchOptimizationMultiSlam()
+
+  // save the optimized graph
+  bool verbose_local{true};
+  bool verbose_global{true};
+  std::string save_dir{"./"};
+  std::string save_name;
+  cout << endl << "----- The optimized graph -----" << endl;
+  for(auto _robot_ptr: multi_robots)
+  {
+    cout << "Robot " << _robot_ptr->this_robot_index_ << " graph:" << endl;
+    save_name = "robot_" + std::to_string(_robot_ptr->this_robot_index_) + "_opt_1";
+    _robot_ptr->saveGraph(save_dir, save_name, verbose_local, verbose_global); cout << endl;
+  }
+
+  // While the robot 1 and 2 are going around, 
+  // The other robot, a robot 3 is generated and starts to operate 
   Robot2D robot_3(multislam); 
   multi_robots.push_back(&robot_3); 
 
@@ -76,6 +93,7 @@ auto main() -> int
   robot_2.addOdometryFactor(Pose2d(one_step, 0.0, 0.0));
 
   // The robot 2 and 3 encountered (i.e., inter-loop detected)
+  // - Assume the node 0 of the robot 2 and the node 1 of the robot 3 has a relative transformation (0,1,0)
   loop_node_target = 0;
   loop_node_matched = 1;
   loop_relative = Pose2d(0., 1., 0.);
@@ -83,20 +101,15 @@ auto main() -> int
 
   // optimization including the anchor node graph
   cout << endl << "optimize the multi-session graph ..." << endl;
-  multislam->batch_optimization(); // == robot_1.batchOptimizationMultiSlam()
+  multislam->batch_optimization(); // == robot_2.batchOptimizationMultiSlam()
   
-  // save the optimized graph
-  bool verbose_local{true};
-  bool verbose_global{true};
-
-  std::string save_dir{"./"};
-  std::string save_name;
+  // save again 
   cout << endl << "----- The optimized graph -----" << endl;
   for(auto _robot_ptr: multi_robots)
   {
-    cout << endl << "Robot " << _robot_ptr->this_robot_index_ << " graph:" << endl;
-    save_name = "robot_" + std::to_string(_robot_ptr->this_robot_index_) + "_opt";
-    _robot_ptr->saveGraph(save_dir, save_name, verbose_local, verbose_global);
+    cout << "Robot " << _robot_ptr->this_robot_index_ << " graph:" << endl;
+    save_name = "robot_" + std::to_string(_robot_ptr->this_robot_index_) + "_opt_2";
+    _robot_ptr->saveGraph(save_dir, save_name, verbose_local, verbose_global); cout << endl;
   }
 
   return 0;

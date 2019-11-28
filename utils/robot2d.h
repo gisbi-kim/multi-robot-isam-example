@@ -4,6 +4,7 @@
 #include <isam/isam.h>
 #include <vector>
 #include <memory>
+#include <iomanip>      // std::setw
 
 #include "isam/Anchor.h"
 
