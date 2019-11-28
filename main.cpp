@@ -39,8 +39,8 @@ auto main() -> int
   // The robot 1 moves a single step in x  
   robot_1.addOdometryFactor(Pose2d(one_step, 0.0, 0.0));
 
-  // The robot 1 moves again 2 steps more in x and 1 step in y  
-  robot_1.addOdometryFactor(Pose2d(2.0*one_step, one_step, 0.0));
+  // The robot 1 moves again a step more in x and 1 step in y  
+  robot_1.addOdometryFactor(Pose2d(one_step, one_step, 0.0));
 
   // While the robot 1 is moving, 
   // A robot 2, the other robot, is generated and starts to operate 
